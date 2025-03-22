@@ -12,7 +12,7 @@ export default HomeScreen = () => {
 
   const handleReset = async () => {
     await removeItem("onboarded");
-    navigation.push("Onboarding")
+    navigation.replace("Onboarding")
   }
 
   return (

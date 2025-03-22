@@ -9,19 +9,19 @@ const { width, height } = Dimensions.get("window")
 export default function OnboardingScreen() {
   const navigation = useNavigation()
 
-  const handleDone = () => {
-    navigation.navigate("Home");
-    setItem("onboarded", "1")
-  }
+  const handleDone = async () => {
+    await setItem("onboarded", "1");
+    navigation.replace("Home"); // ✅ Use replace instead of navigate
+  };
+
 
   // Custom Done Button
-  const doneButton = ({ ...props }) => {
-    return (
-      <TouchableOpacity style={styles.doneButton} {...props}>
-        <Text>Done</Text>
-      </TouchableOpacity>
-    )
-  }
+  const DoneButton = ({ isLight, ...props }) => (
+    <TouchableOpacity style={styles.doneButton} {...props}>
+      <Text style={{ color: isLight ? '#000' : '#fff' }}>Done</Text>
+    </TouchableOpacity>
+  );
+
 
   return (
     <View style={styles.container}>
@@ -29,7 +29,7 @@ export default function OnboardingScreen() {
         onDone={handleDone}
         onSkip={handleDone}
         // bottomBarHighlight={false}
-        // DoneButtonComponent={doneButton}
+        DoneButtonComponent={DoneButton}
         containerStyles={{ paddingHorizontal: 15 }}
         pages={[
           {
